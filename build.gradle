@@ -1,0 +1,48 @@
+
+buildscript {
+
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+        mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+    }
+}
+
+
+subprojects {
+    apply plugin: 'kotlin'
+
+    buildscript {
+        repositories {
+            maven { url "https://plugins.gradle.org/m2/" }
+            mavenCentral()
+            jcenter()
+            maven { url 'https://jitpack.io' }
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+
+    dependencies {
+        compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+        compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    }
+
+    kotlin {
+        experimental { coroutines 'enable' }
+    }
+
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.5'
+}

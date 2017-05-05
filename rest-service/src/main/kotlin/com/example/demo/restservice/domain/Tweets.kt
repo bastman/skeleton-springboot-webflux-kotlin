@@ -1,6 +1,6 @@
 package com.example.demo.restservice.domain
 
-import com.example.demo.logging.AppLogger
+//import com.example.demo.logging.AppLogger
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
 import org.springframework.stereotype.Component
@@ -35,7 +35,7 @@ class TweetService(private val repository: TweetRepository) {
 typealias TweetRepositoryCache = Cache<String, Tweet>
 @Component
 class TweetRepository() {
-    private val LOGGER = AppLogger.get(javaClass)
+   // private val LOGGER = AppLogger.get(javaClass)
 
     private val cache: TweetRepositoryCache by lazy {
         val expiry = Duration.ofDays(3)
@@ -49,7 +49,7 @@ class TweetRepository() {
 
     fun add(item: Tweet) {
         cache.put(item.id, item)
-        LOGGER.info("add item to repository. itemId=${item.id}")
+       // LOGGER.info("add item to repository. itemId=${item.id}")
     }
 
     fun getOrNull(itemId: String) = cache.getIfPresent(itemId)

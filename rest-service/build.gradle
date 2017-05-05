@@ -29,5 +29,11 @@ dependencies {
     // cache: caffeine
     compile("com.github.ben-manes.caffeine:caffeine")
 
+    /*
+
+        compile("io.projectreactor:reactor-kotlin-extensions:1.0.0.BUILD-SNAPSHOT")
+    testCompile("io.projectreactor.addons:reactor-test")
+     */
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

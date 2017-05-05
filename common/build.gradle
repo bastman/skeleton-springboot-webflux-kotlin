@@ -7,8 +7,8 @@ dependencies {
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$kotlinxCoroutinesVersion"
 
     // logging
-    compile("net.logstash.logback:logstash-logback-encoder:$logstashLogbackEncoderVersion")
-    compile("org.slf4j:slf4j-api:$slfApiVersion")
+    //compile("net.logstash.logback:logstash-logback-encoder:$logstashLogbackEncoderVersion")
+    //compile("org.slf4j:slf4j-api:$slfApiVersion")
 
     // jackson
     compile("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")

@@ -1,4 +1,4 @@
-## classic - RestController, but reactive
+## classic-mvc-style RestController, but reactive
 
 - https://www.infoq.com/articles/reactor-by-example
 

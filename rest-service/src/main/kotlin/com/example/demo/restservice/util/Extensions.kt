@@ -1,7 +1,10 @@
 package com.example.demo.restservice.util
 
 
+import com.example.demo.restservice.DemoRestApplication
 import org.springframework.boot.SpringApplication
+import org.springframework.boot.WebApplicationType
+import org.springframework.boot.builder.SpringApplicationBuilder
 
 import org.springframework.http.MediaType.*
 import org.springframework.web.reactive.function.server.ServerRequest
@@ -29,6 +32,10 @@ import kotlin.reflect.KClass
 // ----------------------
 
 fun run(type: KClass<*>, vararg args: String) = SpringApplication.run(type.java, *args)
+fun runWebflux(type: KClass<*>, vararg args: String) = SpringApplicationBuilder()
+        .sources(type.java)
+        .web(WebApplicationType.REACTIVE)
+        .run(*args)
 
 // -------------------------
 // Spring WebFlux extensions

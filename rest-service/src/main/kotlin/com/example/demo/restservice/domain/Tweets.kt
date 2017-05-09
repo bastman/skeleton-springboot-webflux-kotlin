@@ -4,6 +4,8 @@ package com.example.demo.restservice.domain
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
 import org.springframework.stereotype.Component
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import java.time.Duration
 import java.time.Instant
 import java.util.*
@@ -28,8 +30,8 @@ class TweetService(private val repository: TweetRepository) {
 
     fun submit(tweet: Tweet) = repository.add(tweet)
     fun get(tweetId: String) = repository.getOrNull(tweetId)
-    fun getItems() = repository.getItems()
-    fun findByAuthor(author: String) = getItems().filter { it.author == author }
+    fun getAll() = repository.getItems()
+    fun findByAuthor(author: String) = getAll().filter { it.author == author }
 }
 
 typealias TweetRepositoryCache = Cache<String, Tweet>
@@ -52,6 +54,7 @@ class TweetRepository() {
        // LOGGER.info("add item to repository. itemId=${item.id}")
     }
 
-    fun getOrNull(itemId: String) = cache.getIfPresent(itemId)
-    fun getItems() = cache.asMap().values.asSequence()
+    fun getOrNull(itemId: String):Mono<Tweet> = Mono.justOrEmpty(cache.getIfPresent(itemId))
+
+    fun getItems():Flux<Tweet> = Flux.fromIterable(cache.asMap().values)
 }

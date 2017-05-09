@@ -1,0 +1,37 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+}
+
+dependencies {
+    compile project(':common')
+    compile('org.springframework.boot:spring-boot-starter-webflux') {
+        exclude module: "hibernate-validator"
+    }
+
+    // cache: caffeine
+    compile("com.github.ben-manes.caffeine:caffeine")
+
+    compile("io.projectreactor:reactor-kotlin-extensions:1.0.0.BUILD-SNAPSHOT")
+    testCompile("io.projectreactor.addons:reactor-test")
+
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}

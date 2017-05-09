@@ -8,45 +8,50 @@ import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.body
 import reactor.core.publisher.Mono
-import java.time.Instant
+import kotlin.streams.toList
 
 @Component
 class TweetHandler(private val tweetService: TweetService) {
 
-    private data class SubmitRequest(val author:String, val message:String);
-    private data class SubmitResponse(val id:String);
-    fun submitOne(req: ServerRequest):Mono<ServerResponse> {
+    data class SubmitRequest(val author: String, val message: String)
+    data class SubmitResponse(val id: String)
+    data class TweetsCollectionResponse(val tweets: List<Tweet>)
 
-       // val m:Mono<SubmitRequest> = req.bodyToMono(SubmitRequest::class.java)
-        return req.bodyToMono(SubmitRequest::class.java)
+    fun submitOne(req: ServerRequest): Mono<ServerResponse> {
+        val submitRequest: Mono<SubmitRequest> =
+                req.bodyToMono(SubmitRequest::class.java)
+
+        val submitResponse: Mono<SubmitResponse> = submitRequest
                 .flatMap {
-                    val tweet=tweetService.create(author = it.author, message = it.message)
-                    println("++ request: $it")
-                    val tweet2=tweetService.create(author = "foo", message = "bar")
+                    val tweet = tweetService
+                            .create(author = it.author, message = it.message)
+                    tweetService.submit(tweet)
 
-                    ServerResponse.ok().json().body(Mono.just(it))
+                    Mono.just(SubmitResponse(id = tweet.id))
                 }
 
-
-/*
-        val request:SubmitRequest = req.bodyToMono(SubmitRequest::class.java)
-                .toFuture()
-                .get();
-        val tweet=tweetService.create(author = request.author, message = request.message)
-*/
-        //val tweet2=tweetService.create(author = "foo", message = "bar")
-        //return ServerResponse.ok().json().body(Mono.just(tweet2))
+        return ServerResponse
+                .ok()
+                .json()
+                .body(submitResponse)
     }
 
-    fun findAll(req: ServerRequest) = ServerResponse
-            .ok()
-            .json()
-            .body(tweetService.getAll())
+    fun findAll(req: ServerRequest): Mono<ServerResponse> {
+        val tweetsResponse = TweetsCollectionResponse(
+                tweets = tweetService
+                        .getAll()
+                        .toStream()
+                        .toList()
+        )
+
+        return ServerResponse
+                .ok()
+                .json()
+                .body(Mono.just(tweetsResponse))
+    }
 
     fun findOne(req: ServerRequest): Mono<ServerResponse> {
-        val t=Tweet(id = "1", createdAt = Instant.now(), author = "seb", message = "was here")
-        tweetService.submit(t)
-        val tweet=tweetService.get(req.pathVariable("id"))
+        val tweet = tweetService.get(req.pathVariable("id"))
 
         return ServerResponse.ok()
                 .json()

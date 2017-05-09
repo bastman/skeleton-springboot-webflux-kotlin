@@ -48,10 +48,6 @@ open class DemoRestApplication {
             tweetService.submit(it)
         }
 
-        tweetService.getAll().subscribe {
-            println(it)
-        }
-
     }
 
     // No qualifying bean of type 'java.util.List<org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping>'

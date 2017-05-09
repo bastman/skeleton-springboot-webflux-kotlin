@@ -10,9 +10,9 @@ import kotlin.streams.toList
 @Component
 class TweetHandler(private val tweetService: TweetService) {
 
-    data class SubmitRequest(val author: String, val message: String);
-    data class SubmitResponse(val id: String);
-    data class TweetsCollectionResponse(val tweets: List<Tweet>);
+    data class SubmitRequest(val author: String, val message: String)
+    data class SubmitResponse(val id: String)
+    data class TweetsCollectionResponse(val tweets: List<Tweet>)
 
     fun submitOne(body: Mono<SubmitRequest>): Mono<SubmitResponse> {
         return body.flatMap {

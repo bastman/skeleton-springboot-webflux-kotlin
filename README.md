@@ -19,9 +19,19 @@ Note: this is just quick and dirty playground
     	
 - I created a feature request: https://github.com/springfox/springfox/issues/1809    	
     	
-## Gradle Modules
+## gradle modules
 
 - common: some shared code (example)
 - rest-service-classic: (reactive) mvc-style restcontroller example
 - rest-service: (reactive) functional-style router example
 
+## project flavours
+
+This project has been implemented in different flavours:
+
+### kotlin
+- spring boot 1.5.* & spring-mvc: https://github.com/bastman/skeleton-springboot-kotlin 
+- spring boot 2.0.* & spring-webflux: https://github.com/bastman/skeleton-springboot-webflux-kotlin
+
+### java
+- spring boot 1.5.* & spring-mvc: https://github.com/bastman/skeleton-springboot-java 

@@ -17,6 +17,8 @@ Note: this is just quick and dirty playground
     	
  todo: try to include mvc, but factory spring boot with webflux ????
     	
+- I created a feature request: https://github.com/springfox/springfox/issues/1809    	
+    	
 ## Gradle Modules
 
 - common: some shared code (example)
